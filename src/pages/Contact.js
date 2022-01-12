@@ -1,19 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import FramePic from "../img/about-img.webp";
-import { BsFacebook, BsInstagram, BsGithub } from "react-icons/bs";
 import axios from "axios";
+import { BsFacebook, BsInstagram, BsGithub } from "react-icons/bs";
 
 function Contact() {
   function fadeEffect() {
-    const socialMedia = document.querySelector(".socialMedia");
+    const socialMedia = document.querySelector("#socialMedia");
     socialMedia.classList.toggle("fade");
   }
 
-  const sendMessage = () => {
+  const [inputValues, setInputValues] = useState({
+    firstname: "",
+    lastname: "",
+    subject: "",
+    email: "",
+    message: "",
+  });
+
+  const sendMessage = (event) => {
+    event.preventDefault();
+
+    const dataWantToSend = {
+      firstname: inputValues.firstname,
+      lastname: inputValues.lastname,
+      subject: inputValues.subject,
+      email: inputValues.email,
+      message: inputValues.message,
+    };
+
     axios
-      .post("http://localhost:3001/contact")
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .post("http://localhost:3001/contact", dataWantToSend)
+      .then((res) => console.log(res.data));
+
+    setInputValues({
+      firstname: "",
+      lastname: "",
+      subject: "",
+      email: "",
+      message: "",
+    });
   };
 
   return (
@@ -25,6 +50,10 @@ function Contact() {
               First name
             </label>
             <input
+              value={inputValues.firstname}
+              onChange={(e) =>
+                setInputValues({ ...inputValues, firstname: e.target.value })
+              }
               type="text"
               className="form-control"
               id="exampleFormControlInput1"
@@ -36,6 +65,10 @@ function Contact() {
               Last name
             </label>
             <input
+              value={inputValues.lastname}
+              onChange={(e) =>
+                setInputValues({ ...inputValues, lastname: e.target.value })
+              }
               type="text"
               className="form-control"
               id="lastname"
@@ -47,6 +80,10 @@ function Contact() {
               Subject
             </label>
             <input
+              value={inputValues.subject}
+              onChange={(e) =>
+                setInputValues({ ...inputValues, subject: e.target.value })
+              }
               type="text"
               className="form-control"
               id="subject"
@@ -58,6 +95,10 @@ function Contact() {
               Email
             </label>
             <input
+              value={inputValues.email}
+              onChange={(e) =>
+                setInputValues({ ...inputValues, email: e.target.value })
+              }
               type="email"
               className="form-control"
               id="email"
@@ -68,7 +109,15 @@ function Contact() {
             <label for="message" className="form-label">
               Message
             </label>
-            <textarea className="form-control" id="message" rows="3"></textarea>
+            <textarea
+              value={inputValues.message}
+              onChange={(e) =>
+                setInputValues({ ...inputValues, message: e.target.value })
+              }
+              className="form-control"
+              id="message"
+              rows="3"
+            ></textarea>
           </div>
           <div className="mb-3">
             <button onClick={sendMessage} className="btn btn-secondary">
@@ -81,8 +130,8 @@ function Contact() {
             <img src={FramePic} alt="Pic frame" />
           </div>
           <button
-            onClick={fadeEffect}
             id="fadeBtn"
+            onClick={fadeEffect}
             className="btn btn-outline-secondary follow"
           >
             Follow me
