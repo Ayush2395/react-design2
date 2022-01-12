@@ -365,11 +365,7 @@ textarea {
   right: 360px;
 }
 
-<<<<<<< HEAD
 .socialMedia {
-=======
-.social-media {
->>>>>>> master
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -379,7 +375,6 @@ textarea {
   top: 210px;
   height: 180px;
   width: 50px;
-<<<<<<< HEAD
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -413,14 +408,6 @@ textarea {
   100% {
     transform: translateX(0);
   }
-=======
-  opacity: 1;
-  transition: opacity 0.4s ease;
-}
-
-.social-media.fade {
-  opacity: 0;
->>>>>>> master
 }
 
 // Responsive
