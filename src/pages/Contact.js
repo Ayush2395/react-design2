@@ -1,10 +1,45 @@
 import React, { useState } from "react";
 import FramePic from "../img/about-img.webp";
-// import { Link } from "react-router-dom";
+import axios from "axios";
 import { BsFacebook, BsInstagram, BsGithub } from "react-icons/bs";
 
 function Contact() {
-  const [follow, setFollow] = useState(false);
+  function fadeEffect() {
+    const socialMedia = document.querySelector("#socialMedia");
+    socialMedia.classList.toggle("fade");
+  }
+
+  const [inputValues, setInputValues] = useState({
+    firstname: "",
+    lastname: "",
+    subject: "",
+    email: "",
+    message: "",
+  });
+
+  const sendMessage = (event) => {
+    event.preventDefault();
+
+    const dataWantToSend = {
+      firstname: inputValues.firstname,
+      lastname: inputValues.lastname,
+      subject: inputValues.subject,
+      email: inputValues.email,
+      message: inputValues.message,
+    };
+
+    axios
+      .post("http://localhost:3001/contact", dataWantToSend)
+      .then((res) => console.log(res.data));
+
+    setInputValues({
+      firstname: "",
+      lastname: "",
+      subject: "",
+      email: "",
+      message: "",
+    });
+  };
 
   return (
     <div className="container contact-section">
@@ -15,6 +50,10 @@ function Contact() {
               First name
             </label>
             <input
+              value={inputValues.firstname}
+              onChange={(e) =>
+                setInputValues({ ...inputValues, firstname: e.target.value })
+              }
               type="text"
               className="form-control"
               id="exampleFormControlInput1"
@@ -26,6 +65,10 @@ function Contact() {
               Last name
             </label>
             <input
+              value={inputValues.lastname}
+              onChange={(e) =>
+                setInputValues({ ...inputValues, lastname: e.target.value })
+              }
               type="text"
               className="form-control"
               id="lastname"
@@ -37,6 +80,10 @@ function Contact() {
               Subject
             </label>
             <input
+              value={inputValues.subject}
+              onChange={(e) =>
+                setInputValues({ ...inputValues, subject: e.target.value })
+              }
               type="text"
               className="form-control"
               id="subject"
@@ -48,6 +95,10 @@ function Contact() {
               Email
             </label>
             <input
+              value={inputValues.email}
+              onChange={(e) =>
+                setInputValues({ ...inputValues, email: e.target.value })
+              }
               type="email"
               className="form-control"
               id="email"
@@ -58,10 +109,20 @@ function Contact() {
             <label for="message" className="form-label">
               Message
             </label>
-            <textarea className="form-control" id="message" rows="3"></textarea>
+            <textarea
+              value={inputValues.message}
+              onChange={(e) =>
+                setInputValues({ ...inputValues, message: e.target.value })
+              }
+              className="form-control"
+              id="message"
+              rows="3"
+            ></textarea>
           </div>
           <div className="mb-3">
-            <button className="btn btn-secondary">Send message</button>
+            <button onClick={sendMessage} className="btn btn-secondary">
+              Send message
+            </button>
           </div>
         </div>
         <div className="col">
@@ -70,26 +131,23 @@ function Contact() {
           </div>
           <button
             id="fadeBtn"
-            onClick={() => {
-              setFollow(!follow);
-            }}
+            onClick={fadeEffect}
             className="btn btn-outline-secondary follow"
           >
             Follow me
           </button>
-          {follow ? (
-            <div className="social-media" id="socialMedia">
-              <div>
-                <BsFacebook size={"30px"} />
-              </div>
-              <div>
-                <BsInstagram size={"30px"} />
-              </div>
-              <div>
-                <BsGithub size={"30px"} />
-              </div>
+
+          <div className="socialMedia" id="socialMedia">
+            <div>
+              <BsFacebook size={"30px"} />
             </div>
-          ) : null}
+            <div>
+              <BsInstagram size={"30px"} />
+            </div>
+            <div>
+              <BsGithub size={"30px"} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
