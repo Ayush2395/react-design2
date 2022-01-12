@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import FramePic from "../img/about-img.webp";
-// import { Link } from "react-router-dom";
 import { BsFacebook, BsInstagram, BsGithub } from "react-icons/bs";
+import axios from "axios";
 
 function Contact() {
-  const [follow, setFollow] = useState(false);
+  function fadeEffect() {
+    const socialMedia = document.querySelector(".socialMedia");
+    socialMedia.classList.toggle("fade");
+  }
+
+  const sendMessage = () => {
+    axios
+      .post("http://localhost:3001/contact")
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="container contact-section">
@@ -61,7 +71,9 @@ function Contact() {
             <textarea className="form-control" id="message" rows="3"></textarea>
           </div>
           <div className="mb-3">
-            <button className="btn btn-secondary">Send message</button>
+            <button onClick={sendMessage} className="btn btn-secondary">
+              Send message
+            </button>
           </div>
         </div>
         <div className="col">
@@ -69,27 +81,23 @@ function Contact() {
             <img src={FramePic} alt="Pic frame" />
           </div>
           <button
+            onClick={fadeEffect}
             id="fadeBtn"
-            onClick={() => {
-              setFollow(!follow);
-            }}
             className="btn btn-outline-secondary follow"
           >
             Follow me
           </button>
-          {follow ? (
-            <div className="social-media" id="socialMedia">
-              <div>
-                <BsFacebook size={"30px"} />
-              </div>
-              <div>
-                <BsInstagram size={"30px"} />
-              </div>
-              <div>
-                <BsGithub size={"30px"} />
-              </div>
+          <div className="socialMedia" id="socialMedia">
+            <div>
+              <BsFacebook size={"30px"} />
             </div>
-          ) : null}
+            <div>
+              <BsInstagram size={"30px"} />
+            </div>
+            <div>
+              <BsGithub size={"30px"} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
