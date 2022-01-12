@@ -367,12 +367,20 @@ textarea {
 
 .social-media {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   flex-direction: column;
   position: relative;
-  right: 248px;
+  right: -44px;
   top: 210px;
+  height: 180px;
+  width: 50px;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.social-media.fade {
+  opacity: 0;
 }
 
 // Responsive
