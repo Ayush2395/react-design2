@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FramePic from "../img/about-img.webp";
-import { BsFacebook } from "react-icons/bs";
+// import { Link } from "react-router-dom";
+import { BsFacebook, BsInstagram, BsGithub } from "react-icons/bs";
 
 function Contact() {
   const [follow, setFollow] = useState(false);
@@ -68,22 +69,27 @@ function Contact() {
             <img src={FramePic} alt="Pic frame" />
           </div>
           <button
-            onClick={() => setFollow(!follow)}
+            id="fadeBtn"
+            onClick={() => {
+              setFollow(!follow);
+            }}
             className="btn btn-outline-secondary follow"
           >
             Follow me
           </button>
           {follow ? (
-            <span className="social-media">
-              <span>
-                <BsFacebook />
-              </span>
-              <span>FaceBook</span>
-              <span>FaceBook</span>
-            </span>
-          ) : (
-            ""
-          )}
+            <div className="social-media" id="socialMedia">
+              <div>
+                <BsFacebook size={"30px"} />
+              </div>
+              <div>
+                <BsInstagram size={"30px"} />
+              </div>
+              <div>
+                <BsGithub size={"30px"} />
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
